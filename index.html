@@ -86,8 +86,8 @@
         loader.classList.remove('hidden');
 
       try {
-        const response = await fetch('http://127.0.0.1:8000/parse-cv', {
-        // const response = await fetch('https://api.cvoptimizer.pl/parse-cv', {
+        // const response = await fetch('http://127.0.0.1:8000/parse-cv', {
+        const response = await fetch('https://back-mdtocv.onrender.com', {
           method: 'POST',
           body: formData
         });
