@@ -38,6 +38,8 @@
       >
         Convert CV
       </button>
+      <div id="messageBox" class="hidden text-sm rounded-md p-3 mt-4"></div>
+
     </div>
 
     <div id="loader" class="hidden flex items-center justify-center text-indigo-600 font-medium space-x-2">
@@ -66,13 +68,34 @@
   </div>
 
   <script>
+    function showMessage(text, type = "info") {
+      const msg = document.getElementById("messageBox");
+      msg.textContent = text;
+      msg.className = "text-sm rounded-md p-3 mt-4";
+
+      if (type === "error") {
+        msg.classList.add("bg-red-100", "text-red-800", "border", "border-red-300");
+      } else if (type === "success") {
+        msg.classList.add("bg-green-100", "text-green-800", "border", "border-green-300");
+      } else {
+        msg.classList.add("bg-blue-100", "text-blue-800", "border", "border-blue-300");
+      }
+
+      msg.classList.remove("hidden");
+
+      // Optional: hide after 5s
+      setTimeout(() => msg.classList.add("hidden"), 5000);
+    }
+
+
+
     document.getElementById('submitBtn').addEventListener('click', async () => {
       const license = document.getElementById('license').value;
       const fileInput = document.getElementById('cvFile');
       const markdownOutput = document.getElementById('markdownOutput');
 
       if (!license || fileInput.files.length === 0) {
-        alert('Please enter your license key and choose a PDF file.');
+        showMessage('Please enter your license key and choose a PDF file.');
         return;
       }
 
@@ -95,7 +118,7 @@
         const data = await response.json();
 
         if (!response.ok) {
-          alert(data.detail || 'Server error.');
+          showMessage(data.detail || 'Server error.');
           submitBtn.disabled = false;
             loader.classList.add('hidden');
           return;
@@ -104,7 +127,7 @@
         loader.classList.add('hidden'); 
         markdownOutput.value = data.markdown || 'No markdown returned.';
       } catch (err) {
-        alert('Network error: ' + err.message);
+        showMessage('Network error: ' + err.message);
       }
     });
 
@@ -112,8 +135,36 @@
       const markdownOutput = document.getElementById('markdownOutput');
       markdownOutput.select();
       document.execCommand('copy');
-      alert('Markdown copied to clipboard.');
+      showMessage('Markdown copied to clipboard.');
     });
   </script>
+  <div class="w-full max-w-2xl mx-auto mt-10 p-6 bg-white rounded-xl shadow-md border border-gray-200 space-y-4 text-sm text-gray-700">
+  <h2 class="text-lg font-semibold text-gray-900">FAQ & Contact</h2>
+
+  <div>
+    <p><strong>What if my license key doesn't work?</strong><br>
+    Make sure you copied it exactly as shown after purchase. Each key can only be used once. If the issue continues, contact us below.</p>
+  </div>
+
+  <div>
+    <p><strong>How long does the conversion take?</strong><br>
+    Usually less than 10 seconds, depending on the size of your PDF.</p>
+  </div>
+
+  <div>
+    <p><strong>What happens to my data?</strong><br>
+    Your PDF is processed temporarily and deleted after conversion. Nothing is stored.</p>
+  </div>
+
+  <div>
+    <p><strong>Need help?</strong><br>
+    Email us at <a href="mailto:hello@cvtomd.online" class="text-indigo-600 hover:underline">hello@cvtomd.online</a></p>
+  </div>
+</div>
+  <footer class="text-center text-sm text-gray-500 mt-10">
+    <p>&copy; 2025 CVtoMD. All rights reserved.</p>
+    <p>Made with ❤️ by <a href="https://gumroad.com/l/cvtomd" class="text-indigo-600 hover:underline">CVtoMD</a></p>
+  </footer>
+  </div>
 </body>
 </html>
