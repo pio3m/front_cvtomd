@@ -109,8 +109,8 @@
 
       msg.classList.remove("hidden");
 
-      // Optional: hide after 5s
-      setTimeout(() => msg.classList.add("hidden"), 5000);
+      // // Optional: hide after 5s
+      // setTimeout(() => msg.classList.add("hidden"), 5000);
     }
 
 
@@ -144,7 +144,7 @@
         const data = await response.json();
 
         if (!response.ok) {
-          showMessage(data.detail || 'Server error.');
+          showMessage(data.detail || 'Something went wrong while processing your request. Please try again or contact support via Gumroad.', 'error');
           submitBtn.disabled = false;
           loader.classList.add('hidden');
           return;
@@ -153,7 +153,7 @@
         loader.classList.add('hidden');
         markdownOutput.value = data.markdown || 'No markdown returned.';
       } catch (err) {
-        showMessage('Network error: ' + err.message);
+        showMessage('Network error – please check your connection and try again.', 'error');
       }
     });
 
