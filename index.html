@@ -1,71 +1,97 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>CVtoMD – Convert your resume to Markdown</title>
   <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body class="bg-gradient-to-br from-slate-100 to-slate-200 text-gray-900 min-h-screen flex items-center justify-center px-4">
-  <div class="w-full max-w-2xl bg-white rounded-2xl shadow-xl p-8 space-y-6 border border-gray-200">
-    <div class="flex items-center space-x-4">
-      <img src="logo.png" alt="CVtoMD Logo" class="w-20 h-auto drop-shadow-lg" />
+
+<body class="bg-gradient-to-br from-slate-100 to-slate-200 text-gray-900 min-h-screen px-4">
+  <main class="flex flex-col items-center justify-center min-h-screen w-full">
+    <div class="w-full max-w-2xl bg-white rounded-2xl shadow-xl p-8 space-y-6 border border-gray-200 mt-8">
+      <div class="flex items-center space-x-4">
+        <img src="logo.png" alt="CVtoMD Logo" class="w-20 h-auto drop-shadow-lg" />
+        <div>
+          <p class="text-sm text-gray-600">Turn your PDF resume into a clean, ATS-optimized CV. <br>
+            Markdown gives you full control over formatting, easier customization, and works great with modern tools
+            like
+            AI.</p>
+        </div>
+      </div>
+      <div class="space-y-4">
+        <label class="block text-sm font-medium text-gray-300">License Key</label>
+        <input type="text" id="license" placeholder="e.g. GMRD-1234-5678"
+          class="w-full border border-gray-300 rounded-md p-3 focus:outline-none focus:ring-2 focus:ring-indigo-400" />
+
+        <label class="block text-sm font-medium text-gray-700">CV File (PDF)</label>
+        <input type="file" id="cvFile" accept="application/pdf"
+          class="w-full border border-gray-300 rounded-md p-3 file:bg-indigo-600 file:text-white file:border-0 file:rounded-md file:px-4 file:py-2 hover:file:bg-indigo-700" />
+
+        <button id="submitBtn" class="w-full bg-indigo-600 text-white p-3 rounded-md font-semibold hover:bg-indigo-700">
+          Convert CV
+        </button>
+        <div id="messageBox" class="hidden text-sm rounded-md p-3 mt-4"></div>
+
+      </div>
+
+      <div id="loader" class="hidden flex items-center justify-center text-indigo-600 font-medium space-x-2">
+        <svg class="animate-spin h-5 w-5 text-indigo-600" xmlns="http://www.w3.org/2000/svg" fill="none"
+          viewBox="0 0 24 24">
+          <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+          <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8z"></path>
+        </svg>
+        <span>Converting CV...</span>
+      </div>
+
       <div>
-        <p class="text-sm text-gray-600">Turn your PDF resume into a clean, ATS-optimized CV. <br>
-            Markdown gives you full control over formatting, easier customization, and works great with modern tools like AI.</p>
+        <label class="block text-sm font-medium text-gray-700">Markdown Output</label>
+        <textarea id="markdownOutput"
+          class="w-full h-64 border border-gray-300 p-3 mt-1 rounded-md font-mono text-sm bg-slate-100"
+          readonly></textarea>
+
+        <button id="copyBtn" class="mt-4 w-full bg-gray-800 text-white p-3 rounded-md font-semibold hover:bg-gray-900">
+          Copy Markdown
+        </button>
       </div>
     </div>
-    <div class="space-y-4">
-      <label class="block text-sm font-medium text-gray-300">License Key</label>
-      <input
-        type="text"
-        id="license"
-        placeholder="e.g. GMRD-1234-5678"
-        class="w-full border border-gray-300 rounded-md p-3 focus:outline-none focus:ring-2 focus:ring-indigo-400"
-      />
 
-      <label class="block text-sm font-medium text-gray-700">CV File (PDF)</label>
-      <input
-        type="file"
-        id="cvFile"
-        accept="application/pdf"
-        class="w-full border border-gray-300 rounded-md p-3 file:bg-indigo-600 file:text-white file:border-0 file:rounded-md file:px-4 file:py-2 hover:file:bg-indigo-700"
-      />
+    <div
+      class="w-full max-w-2xl mx-auto mt-10 p-6 bg-white rounded-xl shadow-md border border-gray-200 space-y-4 text-sm text-gray-700">
+      <h2 class="text-lg font-semibold text-gray-900">FAQ & Contact</h2>
 
-      <button
-        id="submitBtn"
-        class="w-full bg-indigo-600 text-white p-3 rounded-md font-semibold hover:bg-indigo-700"
-      >
-        Convert CV
-      </button>
-      <div id="messageBox" class="hidden text-sm rounded-md p-3 mt-4"></div>
+      <div>
+        <p><strong>What if my license key doesn't work?</strong><br>
+          Make sure you copied it exactly as shown after purchase. Each key can only be used once. If the issue
+          continues,
+          contact us below.</p>
+      </div>
+
+      <div>
+        <p><strong>How long does the conversion take?</strong><br>
+          Usually less than 10 seconds, depending on the size of your PDF.</p>
+      </div>
+
+      <div>
+        <p><strong>What happens to my data?</strong><br>
+          Your PDF is processed temporarily and deleted after conversion. Nothing is stored.</p>
+      </div>
+
+      <div>
+        <p><strong>Need help?</strong><br>
+          Please <a href="https://gumroad.com/l/cvtomd/support" class="text-indigo-600 hover:underline"
+            target="_blank">contact us directly via Gumroad</a> if you experience any issues with your license key or
+          the conversion process.</p>
+      </div>
 
     </div>
-
-    <div id="loader" class="hidden flex items-center justify-center text-indigo-600 font-medium space-x-2">
-    <svg class="animate-spin h-5 w-5 text-indigo-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8z"></path>
-    </svg>
-    <span>Converting CV...</span>
-    </div>
-
-    <div>
-      <label class="block text-sm font-medium text-gray-700">Markdown Output</label>
-      <textarea
-        id="markdownOutput"
-        class="w-full h-64 border border-gray-300 p-3 mt-1 rounded-md font-mono text-sm bg-slate-100"
-        readonly
-      ></textarea>
-
-      <button
-        id="copyBtn"
-        class="mt-4 w-full bg-gray-800 text-white p-3 rounded-md font-semibold hover:bg-gray-900"
-      >
-        Copy Markdown
-      </button>
-    </div>
-  </div>
+    <footer class="text-center text-sm text-gray-500 mt-10 w-full">
+      <p>&copy; 2025 CVtoMD. All rights reserved.</p>
+      <p>Made with ❤️ by <a href="https://gumroad.com/l/cvtomd" class="text-indigo-600 hover:underline">CVtoMD</a>
+      </p>
+    </footer>
+  </main>
 
   <script>
     function showMessage(text, type = "info") {
@@ -103,10 +129,10 @@
       formData.append('license', license);
       formData.append('file', fileInput.files[0]);
 
-        const submitBtn = document.getElementById('submitBtn');
-        const loader = document.getElementById('loader');
-        submitBtn.disabled = true;
-        loader.classList.remove('hidden');
+      const submitBtn = document.getElementById('submitBtn');
+      const loader = document.getElementById('loader');
+      submitBtn.disabled = true;
+      loader.classList.remove('hidden');
 
       try {
         // const response = await fetch('http://127.0.0.1:8000/parse-cv', {
@@ -120,11 +146,11 @@
         if (!response.ok) {
           showMessage(data.detail || 'Server error.');
           submitBtn.disabled = false;
-            loader.classList.add('hidden');
+          loader.classList.add('hidden');
           return;
         }
         submitBtn.disabled = false;
-        loader.classList.add('hidden'); 
+        loader.classList.add('hidden');
         markdownOutput.value = data.markdown || 'No markdown returned.';
       } catch (err) {
         showMessage('Network error: ' + err.message);
@@ -138,34 +164,6 @@
       showMessage('Markdown copied to clipboard.');
     });
   </script>
-  </div>
-
-  <div class="w-full max-w-2xl mx-auto mt-10 p-6 bg-white rounded-xl shadow-md border border-gray-200 space-y-4 text-sm text-gray-700">
-  <h2 class="text-lg font-semibold text-gray-900">FAQ & Contact</h2>
-
-  <div>
-    <p><strong>What if my license key doesn't work?</strong><br>
-    Make sure you copied it exactly as shown after purchase. Each key can only be used once. If the issue continues, contact us below.</p>
-  </div>
-
-  <div>
-    <p><strong>How long does the conversion take?</strong><br>
-    Usually less than 10 seconds, depending on the size of your PDF.</p>
-  </div>
-
-  <div>
-    <p><strong>What happens to my data?</strong><br>
-    Your PDF is processed temporarily and deleted after conversion. Nothing is stored.</p>
-  </div>
-<!-- 
-  <div>
-    <p><strong>Need help?</strong><br>
-    Email us at <a href="mailto:hello@cvtomd.online" class="text-indigo-600 hover:underline">hello@cvtomd.online</a></p>
-  </div> -->
-</div>
-  <footer class="text-center text-sm text-gray-500 mt-10">
-    <p>&copy; 2025 CVtoMD. All rights reserved.</p>
-    <p>Made with ❤️ by <a href="https://gumroad.com/l/cvtomd" class="text-indigo-600 hover:underline">CVtoMD</a></p>
-  </footer>
 </body>
+
 </html>
